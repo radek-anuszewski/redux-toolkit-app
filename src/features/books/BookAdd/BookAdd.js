@@ -3,16 +3,16 @@ import {useDispatch} from "react-redux";
 import {addBook} from "../booksSlice";
 
 export const BookAdd = () => {
-  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   const dispatch = useDispatch();
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!name) {
+    if (!title) {
       return;
     }
-    dispatch(addBook(name));
-    setName('');
+    dispatch(addBook(title));
+    setTitle('');
   };
 
   return (
@@ -20,7 +20,7 @@ export const BookAdd = () => {
       <label htmlFor="title">
         Tytuł
       </label>
-      <input value={name} id="title" type="text" onChange={(e) => setName(e.target.value)} />
+      <input value={title} id="title" type="text" onChange={(e) => setTitle(e.target.value)} />
       <button type="submit">
         Dodaj
       </button>

@@ -10,7 +10,8 @@ const slice = createSlice({
       state.list.push(action.payload);
     },
     cancelDeficiency: (state, action) => {
-      state.list = state.list.filter(el => el !== action.payload);
+      state.list = state
+        .list.filter(el => el !== action.payload);
     },
   },
 });
