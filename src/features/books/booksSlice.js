@@ -1,5 +1,28 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {cancelDeficiency, reportDeficiency} from "../deficiencies/deficienciesSlice";
+
+const loadBooks = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(
+        [
+          {
+            title: 'Książka z serwera',
+            deficiency: false,
+          }
+        ]
+      )
+    }, 5000);
+  })
+};
+
+export const getBooks = createAsyncThunk(
+  'LOAD_BOOKS',
+  async() => {
+    const response = await loadBooks();
+    return response;
+  }
+)
 
 const slice = createSlice({
   name: 'books',
@@ -9,6 +32,7 @@ const slice = createSlice({
       {title: 'Hobbit', deficiency: false},
       {title: 'Władca Pierścieni', deficiency: false},
     ],
+    loading: false,
   },
   reducers: {
     addBook: (state, action) => {
@@ -26,6 +50,13 @@ const slice = createSlice({
     [cancelDeficiency]: (state, action) => {
       const book = state.list.find(book => book.title === action.payload);
       book.deficiency = false;
+    },
+    [getBooks.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getBooks.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.list.push(...action.payload)
     },
   }
 });
