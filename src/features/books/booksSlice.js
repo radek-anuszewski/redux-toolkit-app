@@ -1,20 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {cancelDeficiency, reportDeficiency} from "../deficiencies/deficienciesSlice";
-
-const loadBooks = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(
-        [
-          {
-            title: 'Książka z serwera',
-            deficiency: false,
-          }
-        ]
-      )
-    }, 5000);
-  })
-};
+import {loadBooks} from "./api/loadBooks";
 
 export const getBooks = createAsyncThunk(
   'LOAD_BOOKS',
